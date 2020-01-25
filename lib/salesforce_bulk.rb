@@ -5,8 +5,11 @@ require "salesforce_bulk/version"
 require 'salesforce_bulk/job'
 require 'salesforce_bulk/connection'
 
+CSV::Converters[:blank_to_nil] = lambda do |field|
+  field && field.empty? ? nil : field
+end
+
 module SalesforceBulk
-  # Your code goes here...
   class Api
 
     @@SALESFORCE_API_VERSION = '47.0'
@@ -73,7 +76,7 @@ module SalesforceBulk
 
     def parse_batch_result result
       begin
-        CSV.parse(result, :headers => true)
+        CSV.parse(result, :headers => true, :converters => [:all, :blank_to_nil], :header_converters => :symbol)
       rescue
         result
       end
