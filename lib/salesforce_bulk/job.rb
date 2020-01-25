@@ -129,7 +129,7 @@ module SalesforceBulk
     def parse_results response
       @result.success = true
       @result.raw = response.lines.to_a[1..-1].join
-      csvRows = CSV.parse(response, :headers => true, :converters => [:all, :blank_to_nil], :header_converters => :symbol)
+      csvRows = CSV.parse(response, :headers => true, :converters => [:all, :blank_to_nil])
 
       csvRows.each_with_index  do |row, index|
         if @@operation != "query"
