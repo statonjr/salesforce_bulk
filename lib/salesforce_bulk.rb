@@ -76,7 +76,7 @@ module SalesforceBulk
 
     def parse_batch_result result
       begin
-        CSV.parse(result, :headers => true, :converters => [:all, :blank_to_nil], :header_converters => :symbol)
+        CSV.parse(result, :headers => true, :converters => [:all, :blank_to_nil])
       rescue
         result
       end
